@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { createResponseSchema } from '#schemas';
+import { createResponseSchema } from './helpers.ts';
 
 export const categoryCreateSchema = z.object({
     name: z.string(),

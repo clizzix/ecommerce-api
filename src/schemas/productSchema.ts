@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { createResponseSchema, populatedField } from '#schemas';
+import { createResponseSchema, populatedField } from './helpers.ts';
 
 export const productCreateSchema = z.object({
     name: z.string().min(1, 'Name is required'),
