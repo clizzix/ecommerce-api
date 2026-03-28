@@ -1,11 +1,10 @@
 import { Schema, model } from 'mongoose';
-import { ref } from 'process';
 
 export const productSchema = new Schema(
     {
         name: {
             type: String,
-            required: [true, 'Prodcut name is required'],
+            required: [true, 'Product name is required'],
             trim: true,
         },
         description: {
