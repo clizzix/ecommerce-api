@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { createResponseSchema } from '#schemas';
+import { createResponseSchema } from './helpers.ts';
 
 export const userCreateSchema = z.object({
     name: z.string().min(2),

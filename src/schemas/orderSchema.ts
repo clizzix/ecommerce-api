@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { createResponseSchema, populatedField } from '#schemas';
+import { createResponseSchema, populatedField } from './helpers.ts';
 
 export const orderCreateSchema = z.object({
     userId: z.string().regex(/^[0-9a-fA-F]{24}$/, 'Invalid User ID format'),
