@@ -38,6 +38,7 @@ export const createCategory: RequestHandler<
         const category = await Category.create(
             req.body satisfies CategoryInputDTO,
         );
+        res.status(201).json(category);
     } catch (error: unknown) {
         next(error);
     }
@@ -81,7 +82,7 @@ export const deleteCategory: RequestHandler<
     { message: string }
 > = async (req, res, next) => {
     try {
-        const deleted = Category.findByIdAndDelete(req.params.id);
+        const deleted = await Category.findByIdAndDelete(req.params.id);
         if (!deleted)
             throw new Error('Category not found', { cause: { status: 404 } });
         res.status(200).json({ message: 'Category deleted' });
