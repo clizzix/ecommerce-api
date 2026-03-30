@@ -16,7 +16,6 @@ export const orderCreateSchema = z.object({
             }),
         )
         .min(1, 'Order must contain at least one product'),
-    total: z.number().min(0, 'Total cannot be negative'),
 });
 
 export const orderResponseSchema = createResponseSchema({
