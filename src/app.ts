@@ -1,7 +1,7 @@
 import '#db';
 import express from 'express';
 import cors from 'cors';
-import { userRoutes, productRoutes } from '#routes';
+import { userRoutes, productRoutes, categoryRoutes } from '#routes';
 import { errorHandler, notFoundHandler } from '#middleware';
 
 const app = express();
@@ -18,7 +18,7 @@ app.use(
 app.use(express.json());
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
-
+app.use('/api/category', categoryRoutes);
 app.use('*splat', notFoundHandler);
 app.use(errorHandler);
 
