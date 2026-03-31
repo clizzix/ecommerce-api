@@ -5,11 +5,10 @@ export const createResponseSchema = <T extends z.ZodRawShape>(shape: T) => {
         .object(shape)
         .extend({
             _id: z.any(),
-            __v: z.any().optional(),
             password: z.string().optional(),
         })
         .transform((data) => {
-            const { _id, __v, password, ...rest } = data as Record<string, any>;
+            const { _id, password, ...rest } = data as Record<string, any>;
             return {
                 ...rest,
                 id: _id.toString() ?? '',
@@ -27,7 +26,7 @@ export const populatedField = z.preprocess((val) => {
     if (typeof obj.toHexString === 'function') return obj.toHexString();
 
     if (obj._id !== undefined) {
-        const { _id, password, __v, ...rest } = obj;
+        const { _id, password, ...rest } = obj;
         return { ...rest, id: String(_id) };
     }
 

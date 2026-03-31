@@ -11,6 +11,126 @@ type CategoryOutputDTO = CategoryInputDTO & {
 };
 type IdParams = { id: string };
 
+/**
+ * @openapi
+ * /api/categories:
+ *  get:
+ *      summary: Get all categories
+ *      tags:
+ *          - Categories
+ *      responses:
+ *          200:
+ *              description: A list of all categories
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/CategoryResponse'
+ *  post:
+ *      summary: Create a new category
+ *      tags:
+ *          - Categories
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/CreateCategoryInput'
+ *      responses:
+ *          201:
+ *              description: Category created successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/CategoryResponse'
+ *          400:
+ *              description: Category name is missing or already exists
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/ErrorResponse'
+ * /api/categories/{id}:
+ *  get:
+ *      summary: Get a category by ID
+ *      tags:
+ *          - Categories
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema:
+ *                type: string
+ *            description: The MongoDB ObjectId of the category
+ *      responses:
+ *          200:
+ *              description: The requested category
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/CategoryResponse'
+ *          400:
+ *              description: Category not found
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/ErrorResponse'
+ *  put:
+ *      summary: Update a category by ID
+ *      tags:
+ *          - Categories
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema:
+ *                type: string
+ *            description: The MongoDB ObjectId of the category
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/CreateCategoryInput'
+ *      responses:
+ *          200:
+ *              description: Category updated successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/CategoryResponse'
+ *          400:
+ *              description: Category not found
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/ErrorResponse'
+ *  delete:
+ *      summary: Delete a category by ID
+ *      tags:
+ *          - Categories
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema:
+ *                type: string
+ *            description: The MongoDB ObjectId of the category
+ *      responses:
+ *          200:
+ *              description: Category deleted successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/DeleteCategoryResponse'
+ *          404:
+ *              description: Category not found
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/ErrorResponse'
+ */
+
 export const getCategories: RequestHandler<
     unknown,
     CategoryOutputDTO[]
