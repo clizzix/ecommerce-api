@@ -8,6 +8,126 @@ type ProductInputDTO = z.infer<typeof productCreateSchema>;
 type ProductOutputDTO = z.infer<typeof productResponseSchema>;
 type IdParams = { id: string };
 
+/**
+ * @openapi
+ * /api/products:
+ *  get:
+ *      summary: Get all products
+ *      tags:
+ *          - Products
+ *      responses:
+ *          200:
+ *              description: A list of all products sorted by creation date (newest first)
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/ProductResponse'
+ *  post:
+ *      summary: Create a new product
+ *      tags:
+ *          - Products
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/CreateProductInput'
+ *      responses:
+ *          201:
+ *              description: Product created successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/ProductResponse'
+ *          400:
+ *              description: Missing required fields, product already exists, or category not found
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/ErrorResponse'
+ * /api/products/{id}:
+ *  get:
+ *      summary: Get a product by ID
+ *      tags:
+ *          - Products
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema:
+ *                type: string
+ *            description: The MongoDB ObjectId of the product
+ *      responses:
+ *          200:
+ *              description: The requested product
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/ProductResponse'
+ *          400:
+ *              description: Product not found
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/ErrorResponse'
+ *  put:
+ *      summary: Update a product by ID
+ *      tags:
+ *          - Products
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema:
+ *                type: string
+ *            description: The MongoDB ObjectId of the product
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/CreateProductInput'
+ *      responses:
+ *          200:
+ *              description: Product updated successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/ProductResponse'
+ *          400:
+ *              description: Product or category not found
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/ErrorResponse'
+ *  delete:
+ *      summary: Delete a product by ID
+ *      tags:
+ *          - Products
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema:
+ *                type: string
+ *            description: The MongoDB ObjectId of the product
+ *      responses:
+ *          200:
+ *              description: Product deleted successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/DeleteProductResponse'
+ *          404:
+ *              description: Product not found
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/ErrorResponse'
+ */
+
 export const getProducts: RequestHandler<unknown, ProductOutputDTO[]> = async (
     _req,
     res,

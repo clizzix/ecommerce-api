@@ -13,6 +13,126 @@ type UserOutDTO = UserInputDTO & {
 };
 type IdParams = { id: string };
 
+/**
+ * @openapi
+ * /api/users:
+ *  get:
+ *      summary: Get all users
+ *      tags:
+ *          - Users
+ *      responses:
+ *          200:
+ *              description: A list of all users sorted by creation date (newest first)
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/UserResponse'
+ *  post:
+ *      summary: Create a new user
+ *      tags:
+ *          - Users
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/CreateUserInput'
+ *      responses:
+ *          201:
+ *              description: User created successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/UserResponse'
+ *          400:
+ *              description: Missing required fields or email already in use
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/ErrorResponse'
+ * /api/users/{id}:
+ *  get:
+ *      summary: Get a user by ID
+ *      tags:
+ *          - Users
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema:
+ *                type: string
+ *            description: The MongoDB ObjectId of the user
+ *      responses:
+ *          200:
+ *              description: The requested user
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/UserResponse'
+ *          400:
+ *              description: User not found
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/ErrorResponse'
+ *  put:
+ *      summary: Update a user by ID
+ *      tags:
+ *          - Users
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema:
+ *                type: string
+ *            description: The MongoDB ObjectId of the user
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/CreateUserInput'
+ *      responses:
+ *          200:
+ *              description: User updated successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/UserResponse'
+ *          400:
+ *              description: User not found
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/ErrorResponse'
+ *  delete:
+ *      summary: Delete a user by ID
+ *      tags:
+ *          - Users
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema:
+ *                type: string
+ *            description: The MongoDB ObjectId of the user
+ *      responses:
+ *          200:
+ *              description: User deleted successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/DeleteUserResponse'
+ *          404:
+ *              description: User not found
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/ErrorResponse'
+ */
+
 export const getUsers: RequestHandler<unknown, UserOutDTO[]> = async (
     _req,
     res,
