@@ -42,7 +42,7 @@ export const createProduct: RequestHandler<
         const product = await Product.create(
             req.body satisfies ProductInputDTO,
         );
-        res.status(201).json(product);
+        res.status(201).json(productResponseSchema.parse(product.toObject()));
     } catch (error: unknown) {
         next(error);
     }
@@ -76,11 +76,11 @@ export const updateProduct: RequestHandler<
         const updated = await Product.findByIdAndUpdate(
             req.params.id,
             req.body,
-            { new: true },
+            { returnDocument: 'after' },
         );
         if (!updated)
             throw new Error('Product not found', { cause: { status: 400 } });
-        res.status(200).json(updated);
+        res.status(200).json(productResponseSchema.parse(updated.toObject()));
     } catch (error: unknown) {
         next(error);
     }
