@@ -18,7 +18,8 @@ export const getOrders: RequestHandler<unknown, OrderOutputDTO[]> = async (
         const orders = await Order.find()
             .populate('userId')
             .populate('products.productId')
-            .sort({ createdAt: -1 });
+            .sort({ createdAt: -1 })
+            .lean();
         res.json(orderResponseSchema.array().parse(orders));
     } catch (error) {
         next(error);
@@ -63,7 +64,8 @@ export const getOrderById: RequestHandler<IdParams, OrderOutputDTO> = async (
     try {
         const order = await Order.findById(req.params.id)
             .populate('userId')
-            .populate('products.productId');
+            .populate('products.productId')
+            .lean();
         if (!order)
             throw new Error('No Order found', { cause: { status: 400 } });
         res.status(200).json(orderResponseSchema.parse(order));
@@ -117,7 +119,7 @@ export const deleteOrder: RequestHandler<
         const deleted = await Order.findByIdAndDelete(req.params.id);
         if (!deleted)
             throw new Error('Order not found', { cause: { status: 404 } });
-        res.status(200).json({ message: 'User deleted' });
+        res.status(200).json({ message: 'Order deleted' });
     } catch (error: unknown) {
         next(error);
     }
